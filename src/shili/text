@@ -1,0 +1,423 @@
+<template>
+  <div>
+    <h1>当前求和为：{{ sum }}</h1>
+    <h3>当前求和放大10倍为：{{ bigSum }}</h3>
+    <h3>我在{{ school }}，学习{{ subject }}</h3>
+    <h3 style="color: red">Person组件的总人数是：{{ personList.length }}</h3>
+    <select v-model.number="n">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+    <button @click="increment(n)">+</button>
+    <button @click="decrement(n)">-</button>
+    <button @click="incrementOdd(n)">当前求和为奇数再加</button>
+    <button @click="incrementWait(n)">等一等再加</button>
+  </div>
+</template>
+
+<script>
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+export default {
+  name: "MyCount",
+  data() {
+    return {
+      n: 1, //用户选择的数字
+    };
+  },
+  computed: {
+    //借助mapState生成计算属性，从state中读取数据。（数组写法）
+    ...mapState("countAbout", ["sum", "school", "subject"]),
+    ...mapState("personAbout", ["personList"]),
+    //借助mapGetters生成计算属性，从getters中读取数据。（数组写法）
+    ...mapGetters("countAbout", ["bigSum"]),
+  },
+  methods: {
+    //借助mapMutations生成对应的方法，方法中会调用commit去联系mutations(对象写法)
+    ...mapMutations("countAbout", { increment: "JIA", decrement: "JIAN" }),
+    //借助mapActions生成对应的方法，方法中会调用dispatch去联系actions(对象写法)
+    ...mapActions("countAbout", {
+      incrementOdd: "jiaOdd",
+      incrementWait: "jiaWait",
+    }),
+  },
+  mounted() {
+    console.log(this.$store);
+  },
+};
+</script>
+
+<style lang="css">
+button {
+  margin-left: 5px;
+}
+</style>
+
+
+
+//求和相关的配置
+export default {
+    namespaced: true,
+    actions: {
+        jiaOdd(context, value) {
+            console.log(context.state, value);
+            console.log('actions中的jiaOdd被调用了')
+            if (context.state.sum % 2) {
+                context.commit('JIA', value)
+            }
+        },
+        jiaWait(context, value) {
+            console.log('actions中的jiaWait被调用了')
+            setTimeout(() => {
+                context.commit('JIA', value)
+            }, 500)
+        }
+    },
+    mutations: {
+        JIA(state, value) {
+            console.log('mutations中的JIA被调用了')
+            state.sum += value
+        },
+        JIAN(state, value) {
+            console.log('mutations中的JIAN被调用了')
+            state.sum -= value
+        },
+    },
+    state: {
+        sum: 0, //当前的和
+        school: '尚硅谷',
+        subject: '前端',
+    },
+    getters: {
+        bigSum(state) {
+            return state.sum * 10
+        }
+    },
+}
+
+
+
+
+
+
+
+{
+	"code": 200,
+	"relatedVideos": null,
+	"playlist": {
+		"id": 24381616,
+		"name": "binaryify喜欢的音乐",
+		"coverImgId": 109951165456950400,
+		"coverImgUrl": "https://p1.music.126.net/8xQFzGa5PEfyCCZvVKD2_Q==/109951165456950398.jpg",
+		"coverImgId_str": "109951165456950398",
+		"adType": 0,
+		"userId": 32953014,
+		"createTime": 1407747901072,
+		"status": 0,
+		"opRecommend": false,
+		"highQuality": false,
+		"newImported": false,
+		"updateTime": 1657260260289,
+		"trackCount": 1024,
+		"specialType": 5,
+		"privacy": 0,
+		"trackUpdateTime": 1658567189278,
+		"commentThreadId": "A_PL_0_24381616",
+		"playCount": 17218,
+		"trackNumberUpdateTime": 1657260260289,
+		"subscribedCount": 4,
+		"cloudTrackCount": 1,
+		"ordered": true,
+		"description": "描述",
+		"tags": [
+			"学习"
+		],
+		"updateFrequency": null,
+		"backgroundCoverId": 0,
+		"backgroundCoverUrl": null,
+		"titleImage": 0,
+		"titleImageUrl": null,
+		"englishTitle": null,
+		"officialPlaylistType": null,
+		"subscribers": [
+			{
+				"defaultAvatar": false,
+				"province": 440000,
+				"authStatus": 0,
+				"followed": false,
+				"avatarUrl": "http://p1.music.126.net/lQXlbuH7b5ov6jwFX74wDQ==/109951163905989777.jpg",
+				"accountStatus": 0,
+				"gender": 1,
+				"city": 440300,
+				"birthday": 0,
+				"userId": 355261255,
+				"userType": 0,
+				"nickname": "mudaoula",
+				"signature": "",
+				"description": "",
+				"detailDescription": "",
+				"avatarImgId": 109951163905989780,
+				"backgroundImgId": 109951164009344400,
+				"backgroundUrl": "http://p1.music.126.net/Ae1LkqxT_TU-XOKiRkA5kw==/109951164009344406.jpg",
+				"authority": 0,
+				"mutual": false,
+				"expertTags": null,
+				"experts": null,
+				"djStatus": 0,
+				"vipType": 0,
+				"remarkName": null,
+				"authenticationTypes": 0,
+				"avatarDetail": null,
+				"backgroundImgIdStr": "109951164009344406",
+				"anchor": false,
+				"avatarImgIdStr": "109951163905989777",
+				"avatarImgId_str": "109951163905989777"
+			},
+			{
+				"defaultAvatar": false,
+				"province": 110000,
+				"authStatus": 0,
+				"followed": false,
+				"avatarUrl": "http://p1.music.126.net/ECL2Sqv303tIuO59XYxp_A==/109951164215114670.jpg",
+				"accountStatus": 0,
+				"gender": 1,
+				"city": 110101,
+				"birthday": 0,
+				"userId": 277994058,
+				"userType": 0,
+				"nickname": "墨华_sunfox",
+				"signature": "待我代码编成，娶你为妻可好？",
+				"description": "",
+				"detailDescription": "",
+				"avatarImgId": 109951164215114670,
+				"backgroundImgId": 109951164276769760,
+				"backgroundUrl": "http://p1.music.126.net/95bw9a150eYDp1wLXt8K4g==/109951164276769759.jpg",
+				"authority": 0,
+				"mutual": false,
+				"expertTags": null,
+				"experts": null,
+				"djStatus": 0,
+				"vipType": 11,
+				"remarkName": null,
+				"authenticationTypes": 0,
+				"avatarDetail": null,
+				"backgroundImgIdStr": "109951164276769759",
+				"anchor": false,
+				"avatarImgIdStr": "109951164215114670",
+				"avatarImgId_str": "109951164215114670"
+			},
+			{
+				"defaultAvatar": false,
+				"province": 610000,
+				"authStatus": 0,
+				"followed": false,
+				"avatarUrl": "http://p1.music.126.net/SUeqMM8HOIpHv9Nhl9qt9w==/109951165647004069.jpg",
+				"accountStatus": 0,
+				"gender": 0,
+				"city": 610100,
+				"birthday": 0,
+				"userId": 255623488,
+				"userType": 0,
+				"nickname": "gordonwu2",
+				"signature": "",
+				"description": "",
+				"detailDescription": "",
+				"avatarImgId": 109951165647004060,
+				"backgroundImgId": 2002210674180200,
+				"backgroundUrl": "http://p1.music.126.net/45Nu4EqvFqK_kQj6BkPwcw==/2002210674180200.jpg",
+				"authority": 0,
+				"mutual": false,
+				"expertTags": null,
+				"experts": null,
+				"djStatus": 0,
+				"vipType": 10,
+				"remarkName": null,
+				"authenticationTypes": 0,
+				"avatarDetail": null,
+				"backgroundImgIdStr": "2002210674180200",
+				"anchor": false,
+				"avatarImgIdStr": "109951165647004069",
+				"avatarImgId_str": "109951165647004069"
+			},
+			{
+				"defaultAvatar": false,
+				"province": 340000,
+				"authStatus": 0,
+				"followed": false,
+				"avatarUrl": "http://p1.music.126.net/FcekCY17ixL4nXc3j4tmSA==/109951166712233489.jpg",
+				"accountStatus": 0,
+				"gender": 1,
+				"city": 341000,
+				"birthday": 0,
+				"userId": 2884324,
+				"userType": 0,
+				"nickname": "阿至Azir",
+				"signature": "123456789",
+				"description": "",
+				"detailDescription": "",
+				"avatarImgId": 109951166712233490,
+				"backgroundImgId": 109951163940478780,
+				"backgroundUrl": "http://p1.music.126.net/7NRQ7KW3KEGylhIs8kArZg==/109951163940478780.jpg",
+				"authority": 0,
+				"mutual": false,
+				"expertTags": null,
+				"experts": null,
+				"djStatus": 0,
+				"vipType": 11,
+				"remarkName": null,
+				"authenticationTypes": 0,
+				"avatarDetail": null,
+				"backgroundImgIdStr": "109951163940478780",
+				"anchor": false,
+				"avatarImgIdStr": "109951166712233489",
+				"avatarImgId_str": "109951166712233489"
+			}
+		],
+		"subscribed": false,
+		"creator": {
+			"defaultAvatar": false,
+			"province": 440000,
+			"authStatus": 0,
+			"followed": false,
+			"avatarUrl": "http://p1.music.126.net/axewGX7u9P9Iuqjep-3mmQ==/109951165601796681.jpg",
+			"accountStatus": 0,
+			"gender": 0,
+			"city": 440300,
+			"birthday": 0,
+			"userId": 32953014,
+			"userType": 0,
+			"nickname": "binaryify",
+			"signature": "测试签名",
+			"description": "",
+			"detailDescription": "",
+			"avatarImgId": 109951165601796690,
+			"backgroundImgId": 109951163792144620,
+			"backgroundUrl": "http://p1.music.126.net/WLTBvNL_l9ZKlslFwaCM9Q==/109951163792144631.jpg",
+			"authority": 0,
+			"mutual": false,
+			"expertTags": null,
+			"experts": null,
+			"djStatus": 0,
+			"vipType": 11,
+			"remarkName": null,
+			"authenticationTypes": 0,
+			"avatarDetail": null,
+			"backgroundImgIdStr": "109951163792144631",
+			"anchor": false,
+			"avatarImgIdStr": "109951165601796681",
+			"avatarImgId_str": "109951165601796681"
+		},
+		"tracks": [
+			{
+				"name": "Can You Feel It",
+				"id": 559754699,
+				"pst": 0,
+				"t": 0,
+				"ar": [
+					{
+						"id": 13226187,
+						"name": "Alex Aris",
+						"tns": [],
+						"alias": []
+					}
+				],
+				"alia": [],
+				"pop": 25,
+				"st": 0,
+				"rt": null,
+				"fee": 1,
+				"v": 5,
+				"crbt": null,
+				"cf": "",
+				"al": {
+					"id": 38684311,
+					"name": "Can You Feel It",
+					"picUrl": "http://p3.music.126.net/daPrYwQLi_pxb5QwnzkmWA==/109951163293584987.jpg",
+					"tns": [],
+					"pic_str": "109951163293584987",
+					"pic": 109951163293585000
+				},
+				"dt": 221675,
+				"h": {
+					"br": 320000,
+					"fid": 0,
+					"size": 8868093,
+					"vd": -54205,
+					"sr": 44100
+				},
+				"m": {
+					"br": 192000,
+					"fid": 0,
+					"size": 5320873,
+					"vd": -54205,
+					"sr": 44100
+				},
+				"l": {
+					"br": 128000,
+					"fid": 0,
+					"size": 3547263,
+					"vd": -54205,
+					"sr": 44100
+				},
+				"sq": null,
+				"hr": null,
+				"a": null,
+				"cd": "1",
+				"no": 1,
+				"rtUrl": null,
+				"ftype": 0,
+				"rtUrls": [],
+				"djId": 0,
+				"copyright": 1,
+				"s_id": 0,
+				"mark": 270336,
+				"originCoverType": 0,
+				"originSongSimpleData": null,
+				"tagPicList": null,
+				"resourceState": true,
+				"version": 5,
+				"songJumpInfo": null,
+				"entertainmentTags": null,
+				"single": 0,
+				"noCopyrightRcmd": null,
+				"mst": 9,
+				"cp": 7003,
+				"mv": 14208700,
+				"rtype": 0,
+				"rurl": null,
+				"publishTime": 1525968000007
+			},
+			{
+				"name": "American Cliché",
+				"id": 1814997329,
+				"pst": 0,
+				"t": 0,
+				"ar": [
+					{
+						"id": 12676847,
+						"name": "FINNEAS",
+						"tns": [],
+						"alias": []
+					}
+				],
+				"alia": [],
+				"pop": 100,
+				"st": 0,
+				"rt": "",
+				"fee": 8,
+				"v": 10,
+				"crbt": null,
+				"cf": "",
+				"al": {
+					"id": 122142193,
+					"name": "American Cliché",
+					"picUrl": "http://p3.music.126.net/dgm8Z1bWWYwT5AbyqZ3NXg==/109951165665600718.jpg",
+					"tns": [],
+					"pic_str": "109951165665600718",
+					"pic": 109951165665600720
+				},
+				"dt": 203389,
+				"h": {
+					"br": 320000,
+					"fid": 0,
+					"size": 8137709,
